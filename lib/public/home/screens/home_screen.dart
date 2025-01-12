@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:forms_app/public/home/widgets/custom_list_tile.dart';
 
+/// #### Home Screen
+/// This is the home screen of the app. It contains a list of all the available screens.
+/// 
+/// #### Properties
+/// - [HomeScreen.name] - The name of the screen.
+/// 
+/// #### Author
+/// Gonzalo Quedena
 class HomeScreen extends StatelessWidget {
   static const name = 'home-screen';
 
@@ -13,22 +21,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
-          ListTile(
-            title: const Text('Cubits'),
-            subtitle: const Text('Simple state management'),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_rounded,
-            ),
-            onTap: () => {context.push('/cubits')},
+          CustomListTile(
+            route: '/cubits',
+            title: 'Cubits',
+            subtitle: 'Simple state management',
           ),
-          ListTile(
-            title: const Text('BLoC'),
-            subtitle: const Text('Complex state management'),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_rounded,
-            ),
-            onTap: () => {context.push('/bloc')},
-          )
+          CustomListTile(
+            route: '/bloc',
+            title: 'BLoC',
+            subtitle: 'Complex state management',
+          ),
         ],
       ),
     );
