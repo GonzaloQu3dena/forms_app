@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forms_app/counter/presentation/widgets/custom_action_button.dart';
 
 class BlocCounterScreen extends StatelessWidget {
   const BlocCounterScreen({super.key});
@@ -21,26 +22,30 @@ class BlocCounterScreen extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
+          CustomActionButton(
+            label: '+3',
+            onPressed: () => {},
             heroTag: '1',
-            child: const Text('+3'),
-            onPressed: () => {},
           ),
+          
           const SizedBox(
             height: 15,
           ),
-          FloatingActionButton(
+
+          CustomActionButton(
+            label: '+2',
+            onPressed: () => {},
             heroTag: '2',
-            child: const Text('+2'),
-            onPressed: () => {},
           ),
+          
           const SizedBox(
             height: 15,
           ),
-          FloatingActionButton(
-            heroTag: '3',
-            child: const Text('+1'),
+          
+          CustomActionButton(
+            label: '+1',
             onPressed: () => {},
+            heroTag: '3',
           ),
         ],
       ),
