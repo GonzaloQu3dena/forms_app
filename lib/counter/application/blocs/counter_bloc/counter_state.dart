@@ -1,14 +1,14 @@
-part of 'counter_cubit.dart';
+part of 'counter_bloc.dart';
 
 /// ### Counter State
-/// This class is responsible for holding the state of the counter.
+/// This class is used to define the state of the counter. The state of the counter is defined by the current value of the counter and the number of transactions that have been made.
 ///
 /// #### Properties
-/// - [counter] - The current value of the counter.
-/// - [transactionCount] - The number of transactions that have been made.
+/// - [counter] : The current value of the counter.
+/// - [transactionCount] : The number of transactions that have been made.
 /// - [props] - A list of properties that are used to compare two instances of the [CounterState].
-///
-/// #### Methods
+/// 
+/// ### Methods
 /// - [copyWith] - A method that creates a new instance of the [CounterState] with the provided values.
 ///
 /// #### Author
@@ -18,11 +18,11 @@ class CounterState extends Equatable {
   final int transactionCount;
 
   const CounterState({
-    this.counter = 0,
+    this.counter = 10,
     this.transactionCount = 0,
   });
 
-  copyWith({
+  CounterState copyWith({
     int? counter,
     int? transactionCount,
   }) =>
