@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forms_app/iam/application/cubit/sign_up/sign_up_cubit.dart';
 import 'package:forms_app/iam/presentation/widgets/custom_text_form_field.dart';
 
 /// ### Sign Up Screen
@@ -15,7 +17,10 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('New user'),
       ),
-      body: const _SignUpView(),
+      body: BlocProvider(
+        create: (context) => SignUpCubit(),
+        child: const _SignUpView(),
+      ),
     );
   }
 }
@@ -66,12 +71,12 @@ class _SignUpForm extends StatefulWidget {
 
 /// ### Sign Up Form State
 /// This is the state of the Sign Up Form. It contains the form fields and the validation of the form.
-/// 
+///
 /// #### Properties
 /// - [username]: The username of the user.
 /// - [email]: The email of the user.
 /// - [password]: The password of the user.
-/// 
+///
 /// #### Author
 /// Gonzalo Quedena
 class _SignUpFormState extends State<_SignUpForm> {
@@ -81,6 +86,7 @@ class _SignUpFormState extends State<_SignUpForm> {
   String email = '';
   String password = '';
 
+  /// This method validates the username field.
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) return 'Required field';
     if (value.trim().isEmpty) return 'Required field';
@@ -88,20 +94,40 @@ class _SignUpFormState extends State<_SignUpForm> {
     return null;
   }
 
+  /// This method validates the email field.
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) return 'Required field';
     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) return 'Invalid email';
     return null;
   }
 
+  /// This method validates the password field.
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) return 'Required field';
     if (value.length < 6) return 'More than 6 characters';
     return null;
   }
 
+  /// This method is called when a field is changed. It updates the state of the form.
+  void _onChanged(SignUpCubit signUpCubit, String field, String value) {
+    switch (field) {
+      case 'username':
+        signUpCubit.usernameChanged(value);
+        break;
+      case 'email':
+        signUpCubit.emailChanged(value);
+        break;
+      case 'password':
+        signUpCubit.passwordChanged(value);
+        break;
+    }
+    _formKey.currentState?.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final signUpCubit = context.watch<SignUpCubit>();
+
     /// Form is used to manage the state of the form.
     return Form(
       key: _formKey,
@@ -109,7 +135,7 @@ class _SignUpFormState extends State<_SignUpForm> {
         children: [
           CustomTextFormField(
             label: 'User name',
-            onChanged: (value) => username = value,
+            onChanged: (value) => _onChanged(signUpCubit, 'username', value),
             validator: _validateUsername,
           ),
           const SizedBox(
@@ -117,7 +143,7 @@ class _SignUpFormState extends State<_SignUpForm> {
           ),
           CustomTextFormField(
             label: 'Email',
-            onChanged: (value) => email = value,
+            onChanged: (value) => _onChanged(signUpCubit, 'email', value),
             validator: _validateEmail,
           ),
           const SizedBox(
@@ -126,7 +152,7 @@ class _SignUpFormState extends State<_SignUpForm> {
           CustomTextFormField(
             label: 'Password',
             obscureText: true,
-            onChanged: (value) => password = value,
+            onChanged: (value) => _onChanged(signUpCubit, 'password', value),
             validator: _validatePassword,
           ),
           const SizedBox(
@@ -136,6 +162,8 @@ class _SignUpFormState extends State<_SignUpForm> {
             onPressed: () {
               final isValid = _formKey.currentState!.validate();
               if (!isValid) return;
+
+              signUpCubit.onSubmit();
             },
             label: const Text('Sign Up'),
             icon: const Icon(Icons.save),
