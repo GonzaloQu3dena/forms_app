@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
           ),
           _divider(),
           CustomListTile(
-            route: '/',
+            route: '/sign-up',
             title: 'New User',
             subtitle: 'Forms management',
           )
