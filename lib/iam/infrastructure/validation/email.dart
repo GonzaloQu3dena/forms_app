@@ -42,6 +42,6 @@ class Email extends FormzInput<String, EmailError> {
     if (value.isEmpty || value.trim().isEmpty) return EmailError.empty;
     if (!emailRegExp.hasMatch(value)) return EmailError.format;
 
-    throw UnimplementedError();
+    return null;
   }
 }

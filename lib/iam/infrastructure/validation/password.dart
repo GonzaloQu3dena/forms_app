@@ -3,12 +3,12 @@ import 'package:formz/formz.dart';
 enum PasswordError { empty, length }
 
 /// ### Password validation
-/// This class is used to validate the password input. 
-/// 
+/// This class is used to validate the password input.
+///
 /// #### Validations
 /// - Check if the password is empty.
 /// - Check if the password is at least 6 characters long.
-/// 
+///
 /// #### Author
 /// Gonzalo Quedena
 class Password extends FormzInput<String, PasswordError> {
@@ -32,10 +32,9 @@ class Password extends FormzInput<String, PasswordError> {
   // Validate the password input.
   @override
   PasswordError? validator(String value) {
-    
     if (value.isEmpty || value.trim().isEmpty) return PasswordError.empty;
     if (value.length < 6) return PasswordError.length;
 
-    throw UnimplementedError();
+    return null;
   }
 }

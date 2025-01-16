@@ -36,6 +36,6 @@ class Username extends FormzInput<String, UsernameError> {
     if (value.isEmpty || value.trim().isEmpty) return UsernameError.empty;
     if (value.length < 6) return UsernameError.length;
 
-    throw UnimplementedError();
+    return null;
   }
 }
