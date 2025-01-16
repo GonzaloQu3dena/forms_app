@@ -62,51 +62,8 @@ class _SignUpView extends StatelessWidget {
 ///
 /// #### Author
 /// Gonzalo Quedena
-class _SignUpForm extends StatefulWidget {
+class _SignUpForm extends StatelessWidget {
   const _SignUpForm();
-
-  @override
-  State<_SignUpForm> createState() => _SignUpFormState();
-}
-
-/// ### Sign Up Form State
-/// This is the state of the Sign Up Form. It contains the form fields and the validation of the form.
-///
-/// #### Properties
-/// - [username]: The username of the user.
-/// - [email]: The email of the user.
-/// - [password]: The password of the user.
-///
-/// #### Author
-/// Gonzalo Quedena
-class _SignUpFormState extends State<_SignUpForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String username = '';
-  String email = '';
-  String password = '';
-
-  /// This method validates the username field.
-  String? _validateUsername(String? value) {
-    if (value == null || value.isEmpty) return 'Required field';
-    if (value.trim().isEmpty) return 'Required field';
-    if (value.length < 6) return 'More than 6 characters';
-    return null;
-  }
-
-  /// This method validates the email field.
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) return 'Required field';
-    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) return 'Invalid email';
-    return null;
-  }
-
-  /// This method validates the password field.
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) return 'Required field';
-    if (value.length < 6) return 'More than 6 characters';
-    return null;
-  }
 
   /// This method is called when a field is changed. It updates the state of the form.
   void _onChanged(SignUpCubit signUpCubit, String field, String value) {
@@ -121,22 +78,30 @@ class _SignUpFormState extends State<_SignUpForm> {
         signUpCubit.passwordChanged(value);
         break;
     }
-    _formKey.currentState?.validate();
+  }
+
+  String? _errorMessage(dynamic field) {
+    return field.isPure || field.isValid
+        ? null
+        : 'Invalid ${field.runtimeType.toString().toLowerCase()}';
   }
 
   @override
   Widget build(BuildContext context) {
     final signUpCubit = context.watch<SignUpCubit>();
 
+    final email = signUpCubit.state.email;
+    final username = signUpCubit.state.username;
+    final password = signUpCubit.state.password;
+
     /// Form is used to manage the state of the form.
     return Form(
-      key: _formKey,
       child: Column(
         children: [
           CustomTextFormField(
             label: 'User name',
             onChanged: (value) => _onChanged(signUpCubit, 'username', value),
-            validator: _validateUsername,
+            errorMessage: _errorMessage(username),
           ),
           const SizedBox(
             height: 20,
@@ -144,7 +109,7 @@ class _SignUpFormState extends State<_SignUpForm> {
           CustomTextFormField(
             label: 'Email',
             onChanged: (value) => _onChanged(signUpCubit, 'email', value),
-            validator: _validateEmail,
+            errorMessage: _errorMessage(email),
           ),
           const SizedBox(
             height: 20,
@@ -153,16 +118,13 @@ class _SignUpFormState extends State<_SignUpForm> {
             label: 'Password',
             obscureText: true,
             onChanged: (value) => _onChanged(signUpCubit, 'password', value),
-            validator: _validatePassword,
+            errorMessage: _errorMessage(password),
           ),
           const SizedBox(
             height: 20,
           ),
           FilledButton.tonalIcon(
             onPressed: () {
-              final isValid = _formKey.currentState!.validate();
-              if (!isValid) return;
-
               signUpCubit.onSubmit();
             },
             label: const Text('Sign Up'),
