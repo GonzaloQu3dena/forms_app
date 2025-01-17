@@ -80,12 +80,6 @@ class _SignUpForm extends StatelessWidget {
     }
   }
 
-  String? _errorMessage(dynamic field) {
-    return field.isPure || field.isValid
-        ? null
-        : 'Invalid ${field.runtimeType.toString().toLowerCase()}';
-  }
-
   @override
   Widget build(BuildContext context) {
     final signUpCubit = context.watch<SignUpCubit>();
@@ -101,7 +95,7 @@ class _SignUpForm extends StatelessWidget {
           CustomTextFormField(
             label: 'User name',
             onChanged: (value) => _onChanged(signUpCubit, 'username', value),
-            errorMessage: _errorMessage(username),
+            errorMessage: username.errorMessage,
           ),
           const SizedBox(
             height: 20,
@@ -109,7 +103,7 @@ class _SignUpForm extends StatelessWidget {
           CustomTextFormField(
             label: 'Email',
             onChanged: (value) => _onChanged(signUpCubit, 'email', value),
-            errorMessage: _errorMessage(email),
+            errorMessage: email.errorMessage,
           ),
           const SizedBox(
             height: 20,
@@ -118,7 +112,7 @@ class _SignUpForm extends StatelessWidget {
             label: 'Password',
             obscureText: true,
             onChanged: (value) => _onChanged(signUpCubit, 'password', value),
-            errorMessage: _errorMessage(password),
+            errorMessage: password.errorMessage,
           ),
           const SizedBox(
             height: 20,
