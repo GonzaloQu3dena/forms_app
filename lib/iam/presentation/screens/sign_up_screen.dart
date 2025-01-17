@@ -45,8 +45,14 @@ class _SignUpView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [
+              SizedBox(
+                height: 20,
+              ),
               FlutterLogo(
                 size: 100,
+              ),
+              SizedBox(
+                height: 20,
               ),
               _SignUpForm(),
             ],
