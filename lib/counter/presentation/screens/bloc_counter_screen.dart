@@ -3,6 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forms_app/counter/application/blocs/counter_bloc/counter_bloc.dart';
 import 'package:forms_app/counter/presentation/widgets/custom_action_button.dart';
 
+/// ### Bloc Counter Screen
+/// This is the main screen for the BLoC counter. It uses the `CounterBloc` to manage the state of the counter.
+/// 
+/// #### Author
+/// Gonzalo Quedena
 class BlocCounterScreen extends StatelessWidget {
   const BlocCounterScreen({super.key});
 
@@ -15,6 +20,15 @@ class BlocCounterScreen extends StatelessWidget {
   }
 }
 
+/// ### Bloc Counter View
+/// This is the view for the BLoC counter screen. It displays the current value of the counter and provides buttons to increase the counter value.
+/// 
+/// #### Methods:
+/// - [increaseCounterBy]: Increases the counter value by a given value.
+/// - [counterReset]: Resets the counter value to 0.
+/// 
+/// #### Author
+/// Gonzalo Quedena
 class _BlocCounterView extends StatelessWidget {
   const _BlocCounterView();
 
