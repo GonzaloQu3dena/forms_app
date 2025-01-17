@@ -2,7 +2,7 @@
 
 ## Summary
 
-**Forms App** is a Flutter application built with a **Domain-Driven Design (DDD)** architecture. It allows users to fill out and submit various forms with validation and state management. The app integrates seamless animations and efficient state management to provide a modern and engaging user experience.
+**Forms App** is a Flutter application built with a Domain-Driven Design (DDD) architecture. It represents a simple form interface with state managed using Cubit. The app validates form fields but does not send data, focusing on providing a straightforward visualization of form handling.
 
 <p align="center">
   <img src="https://via.placeholder.com/200" alt="app-evidence" width="200"/>
